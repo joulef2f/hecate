@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -13,13 +14,45 @@ class CreneauxController extends Controller
 {
     /**
      * @Route("/", name="homepage")
+     *@Method({"GET","POST"})
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request,$type ='week')
     {
-        $cren = $this->getDoctrine()->getManager()->getRepository('AppBundle:Creneaux')->findAll();
+        // i take what that there are in the post and if he's null he takes a default value
+        $typeWanted = $request->request->get('val1');
+
+        if(isset($typeWanted)){
+            $type = $typeWanted;
+        }
+        $em = $this->getDoctrine()->getManager();
+        // or i take the week's crens or the weeks-ends
+        if ($type == 'week') {
+            $type = $em->getRepository(TypeCreneaux::class)->findOneBy(['name' => "Semaine"]);
+            $cren = $em->getRepository('AppBundle:Creneaux')->findBy(['type' => $type],['dateOf' => 'ASC']);
+        }else{
+            $typeJ = $em->getRepository(TypeCreneaux::class)->findOneBy(['name' => "WE-jour"]);
+            $typeN = $em->getRepository(TypeCreneaux::class)->findOneBy(['name' => "WE-nuit"]);
+
+
+            // it's custom query dql for to have the crens asked
+            $query = $em->createQuery(
+                'SELECT c FROM AppBundle:Creneaux c
+                WHERE c.type = :id
+                OR c.type = :idi
+                ORDER BY c.dateOf'
+                )->setParameters(['id' => $typeJ->getId(), 'idi'=> $typeN->getId()]);
+
+                $cren = $query->getResult();
+
+
+
+
+        }
+          $this->needsOfDay($cren);
         return $this->render('default/index.html.twig', [
             'cren' => $cren
         ]);
+
     }
     /**
      * @Route("/create", name="createCreneaux")
@@ -108,8 +141,6 @@ class CreneauxController extends Controller
     public function removeUser(Creneaux $cren)
     {
 
-    
-
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $user->removeCreneaux($cren);
@@ -119,4 +150,13 @@ class CreneauxController extends Controller
             'name' => $user->getUsername(),
             'profil' => $user->getProfile()->getName(),
         ]);
-}}
+      }
+      public function needsOfDay($crens)
+      {
+          foreach ($crens as $cren) {
+            foreach ($cren->getUsers() as $user) {
+              dump($user->getProfile()->getName());
+            }
+          }
+      }
+}

@@ -5,19 +5,40 @@
     <div class="card" style="width: 18rem;">
   <img class="card-img-top" src="..." alt="Card image cap">
   <div class="card-body">
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+	<p>{{app.user.username}}</p>
+    <p>Nombre de créneaux :<span>7</span>/7 </p>
+
   </div>
 </div>
   </div>
   <!-- calendrier -->
 <div class="row col-8 justify-content-center">
+	<div class="row col-12 my-2 justify-content-center">
+		<form class="" action="" method="post">
+			<input type="hidden" name="val1" value="week">
+			<button type="submit" class="btn mx-1  btn-outline-secondary">Semaine</button>
+		</form>
+		<form class="" action="" method="post">
+			<input type="hidden" name="val1" value="week-end">
+			<button type="submit" class="btn mx-1  btn-outline-secondary">Week-End</button>
+		</form>
+	</div>
 {% for item in cren %}
 
   <div class="card bg-light mx-1 mb-3" data-id ="{{item.id}}" style="max-width: 18rem;">
-    <div class="card-header">{{ item.dateOf|date("D d M Y") }}</div>
+    <div class="card-header">{{ item.dateOf|date("D d M Y") }}
+		<p>
+            <span class="sp_Equ">Equ</span>
+        	<span class="sp_Equ">Equ</span>
+			<span class="sp_Equ">Equ</span>
+			<span class="sp_CA">CA</span>
+			<span class="sp_PL">PL</span>
+			<span class="sp_CATE">CATE</span>
+		 </p>
+	</div>
     <div class="card-body">
-		{% for user in item.users %}
 
+		{% for user in item.users %}
 			<div class="sp_{{ user.profile.name }} px-1 my-1">{{ user.username }}</div>
 
 		{% endfor %}

@@ -16,6 +16,10 @@ class TypeCreneaux
     {
         $this->creneaux = new ArrayCollection();
     }
+    public function __tostring()
+    {
+        return $this->getName();
+    }
     /**
      * @var int
      *

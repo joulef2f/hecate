@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\Creneaux;
 
 /**
  * CreneauxRepository
@@ -10,4 +11,5 @@ namespace AppBundle\Repository;
  */
 class CreneauxRepository extends \Doctrine\ORM\EntityRepository
 {
+
 }
