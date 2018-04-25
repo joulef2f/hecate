@@ -34,6 +34,14 @@ class User extends BaseUser
      * @ORM\ManyToMany(targetEntity="Creneaux", inversedBy="users", cascade={"persist"})
      */
     private $creneaux;
+    /**
+     * @ORM\Column(name="crenTake", type="integer")
+     */
+     private $crenTake;
+     /**
+      * @ORM\Column(name="atCount", type="boolean")
+      */
+      private $atCount;
 
     public function __construct()
     {
