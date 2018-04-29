@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+{% dump(poj.id) %}
+{% dump(crenDay) %}
+<div class="card col">
+  <div class="card-header">
+	  Paramètres
+  </div>
+  <div class="card-body row">
+	  <div class="col-3">
+    		<h5 class="card-title">POJ</h5>
+    		<p class="card-text">{{ poj.valParam }}</p>
+		</div>
+	  <div class="col-3">
+    		<h5 class="card-title">Créneaux Semaine par personnes</h5>
+    		<p class="card-text">{{ crenDay.valParam }}</p>
+		</div>
+	  <div class="col-3">
+    		<h5 class="card-title">Créneaux Week End par personnes</h5>
+    		<p class="card-text">{{ crenWE.valParam }}</p>
+		</div>
+      </div>
+</div>
+
+{% endblock %}

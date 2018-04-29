@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Nom</th>
+      <th scope="col">Email</th>
+	  <th scope="col">Profil</th>
+      <th scope="col">Dernière connection</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+	  {% for user in users %}
+    <tr>
+      <td>{{ user.username }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.profile.name}}</td>
+      <td>{{ user.lastLogin|date() }}</td>
+      <td><a href="">Edit</a> </td>
+    </tr>
+{% endfor %}
+
+  </tbody>
+</table>
+
+
+
+
+
+{% endblock %}

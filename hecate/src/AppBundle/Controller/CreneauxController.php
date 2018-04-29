@@ -28,7 +28,7 @@ class CreneauxController extends Controller
         // or i take the week's crens or the weeks-ends
         if ($type == 'week') {
             $type = $em->getRepository(TypeCreneaux::class)->findOneBy(['name' => "Semaine"]);
-            $cren = $em->getRepository('AppBundle:Creneaux')->findBy(['type' => $type],['dateOf' => 'ASC']);
+            $cren = $em->getRepository(Creneaux::class)->findBy(['type' => $type],['dateOf' => 'ASC']);
         }else{
             $typeJ = $em->getRepository(TypeCreneaux::class)->findOneBy(['name' => "WE-jour"]);
             $typeN = $em->getRepository(TypeCreneaux::class)->findOneBy(['name' => "WE-nuit"]);
@@ -99,7 +99,7 @@ class CreneauxController extends Controller
                $em->flush();
                // task at to do if the day is a day of the week
            }else{
-               dump(new \DateTime('now'));
+
                $creneau = new Creneaux();
                $creneau->setDateOf($day);
                $creneau->setType($em->getRepository('AppBundle:TypeCreneaux')->findOneBy([
@@ -127,7 +127,7 @@ class CreneauxController extends Controller
 
 
         $em->flush();
-        dump($user);
+
         return $this->json([
             'name' => $user->getUsername(),
             'profil' => $user->getProfile()->getName(),

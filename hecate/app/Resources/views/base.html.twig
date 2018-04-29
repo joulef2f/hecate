@@ -21,11 +21,12 @@
    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-calendar-alt"></i> Gestion Creneaux</a>
    <div class="dropdown-menu">
      <a class="dropdown-item" href="#"><i class="far fa-calendar-plus"></i> Nouvelle periode</a>
-     <a class="dropdown-item" href="#"><i class="fas fa-users"></i> Personnel actif</a>
+     <a class="dropdown-item" href="{{ path('users_list') }}"><i class="fas fa-users"></i> Personnel</a>
+     <a class="dropdown-item" href="{{ path('users_list') }}"><i class="fas fa-users"></i> Paramètres</a>
 
  </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="{{ path('homepage') }}">Accueil</a>
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" href="#">Disabled</a>

@@ -41,6 +41,7 @@ class Creneaux
      * @ORM\Column(name="dateOf", type="datetime")
      */
     private $dateOf;
+
     /**
      * @ORM\ManyToOne(targetEntity="TypeCreneaux", inversedBy="creneaux")
      */

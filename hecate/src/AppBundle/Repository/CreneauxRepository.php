@@ -1,6 +1,8 @@
 <?php
 
 namespace AppBundle\Repository;
+
+use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Creneaux;
 
 /**
@@ -14,9 +16,9 @@ class CreneauxRepository extends \Doctrine\ORM\EntityRepository
 public function howManySp()
 {
   $connection = $this->getEntityManager()->getConnection();
-  $sql = `SELECT COUNT(*) FROM fos_user WHERE fos_user.atCount = 1 `
+  $sql = `SELECT COUNT(*) FROM fos_user WHERE fos_user.atCount = 1 `;
   $stm = $connection->query($sql);
-  $number = $stm->fetch()
+  $number = $stm->fetch();
   return $number;
 }
 
