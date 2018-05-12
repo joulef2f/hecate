@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Creneaux;
+use AppBundle\Entity\TypeCreneaux;
 
 /**
  * CreneauxRepository
@@ -13,13 +14,66 @@ use AppBundle\Entity\Creneaux;
  */
 class CreneauxRepository extends \Doctrine\ORM\EntityRepository
 {
+
+public function findCreneauxWeek($em, $month, $year, $id = 14)
+{
+    // ici grace au bundle doctrine extension j'ai pu utiliser les Month et year de sql dans ma requete DQL
+    $query = $em->createQuery(
+         "SELECT c FROM AppBundle:Creneaux c WHERE MONTH(c.dateOf) = :month AND YEAR(c.dateOf) = :year AND c.type = :id"
+        )->setParameters([
+            'month' => $month,
+            'year' => $year,
+            'id' => $id]);
+    return $query->getResult();
+
+
+}
+public function findCreneauxWeekEnd($em, $month, $year, $id, $idi)
+{
+
+    $query = $em->createQuery(
+        'SELECT c FROM AppBundle:Creneaux c
+        WHERE MONTH(c.dateOf) = :month and
+        YEAR(c.dateOf) = :year AND c.type = :id
+        OR MONTH(c.dateOf) = :month and
+        YEAR(c.dateOf) = :year AND  c.type = :idi
+        ORDER BY c.dateOf'
+
+        )->setParameters([
+            'month' => $month,
+            'year' => $year,
+            'id' => $id,
+            'idi'=> $idi,
+            ]);
+        return $query->getResult();
+
+
+}
 public function howManySp()
 {
   $connection = $this->getEntityManager()->getConnection();
-  $sql = `SELECT COUNT(*) FROM fos_user WHERE fos_user.atCount = 1 `;
-  $stm = $connection->query($sql);
+  $sql = "SELECT COUNT(*) as num FROM fos_user WHERE fos_user.atCount = 1";
+  $stm = $connection->prepare($sql);
+  $stm->execute();
   $number = $stm->fetch();
-  return $number;
+  return $number['num'];
+}
+public function howCrenWeek($month,$year, $id)
+{
+
+    $conn = $this->getEntityManager()->getConnection();
+
+    $sql = "SELECT COUNT(*) as num FROM creneaux WHERE creneaux.type_id = :id AND MONTH(creneaux.dateOf) = :month AND YEAR(creneaux.dateOf) = :year";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        'month' => $month,
+        'year' => $year,
+        'id' => $id
+]);
+
+    $number = $stmt->fetch();
+    return $number['num'];
+
 }
 
 }

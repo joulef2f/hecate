@@ -22,3 +22,17 @@ color: white;
 background-color: orange;
 color: black;
 }
+
+a{
+	color: black;
+}
+#titre{
+	color: lightgrey;
+}
+h5{
+	text-align: center;
+}
+h1{
+	font-family: 'Roboto';
+	letter-spacing: 0.8em;
+}

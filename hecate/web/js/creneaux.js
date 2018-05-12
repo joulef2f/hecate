@@ -4,6 +4,7 @@ var app = {
     $('.in').on('click',app.addUser)
     $('.out').on('click',app.removeUser)
     app.checkNeeds();
+    app.howManyITook();
   },
   addUser:function(evt){
     var id = $(evt.target).closest('.card').data('id')
@@ -19,6 +20,7 @@ var app = {
     ).done(function(data){
 
       $(evt.target).parent().parent().prev(".card-body").append(`<div class="sp_${data.profil} px-1 my-1">${data.name}</div>`)
+      app.howManyITook();
       app.checkNeeds()
     })
   },
@@ -35,7 +37,8 @@ var app = {
       }
     ).done(function(data){
       console.log($('.card[data-id='+id+']>.card-body> div:contains('+data.name+')'));
-      $('.card[data-id='+id+']>.card-body> div:contains('+data.name+')').remove()
+      $('.card[data-id='+id+']>.card-body> div:contains('+data.name+')').remove();
+      app.howManyITook();
       app.checkNeeds()
     })
   },
@@ -62,6 +65,11 @@ var app = {
 
 
     })
+  },
+  howManyITook:function(){
+    var name = $("#username").text()
+    var nb = $('.card-body > div:contains('+ name +') ').length
+    $('#atTake').text(nb)
   }
 }
 $(app.init)

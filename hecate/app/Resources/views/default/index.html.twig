@@ -1,57 +1,75 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-  <div class="col-12 col-md-2 text-md-center">
-    <div class="card" style="width: 18rem;">
-      <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-      <div class="card-body">
-      	<p>{{app.user.username}}</p>
-          <p>Nombre de créneaux :<span>7</span>/7 </p>
-          <hr>
-          <h2>Arbitrage</h2>
-          <div class="">
-            <p>Nouvelle Periode <i class="fas fa-bullhorn"></i></p>
+<nav class="col-12 bg-light p-0 m-0 col-md-2  sidebar">
 
-          </div>
-      </div>
+
+	<h2 class="mt-2 mb-0 text-center"><i class="fas fa-user-circle"></i> <span id="username">{{ app.user.username }}</span></h2>
+	<p class='text-center mx-0 p-0'><a class="nav-link " href="/logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></p>
+	<hr class="mx-2">
+    <h5>Menu</h5>
+	<ul class="nav flex-column ">
+		<li class="nav-item">
+			<a class="nav-link" href="{{ path('homepage') }}"><i class="fas fa-adjust"></i> Accueil</a>
+		</li>
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-calendar-alt"></i> Gestion Creneaux</a>
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="{{ path('createCreneaux')}}"><i class="far fa-calendar-plus"></i> Nouvelle periode</a>
+				<a class="dropdown-item" href="{{ path('users_list') }}"><i class="fas fa-users"></i> Personnel</a>
+				<a class="dropdown-item" href="{{ path('users_list') }}"><i class="fas fa-cogs"></i> Paramètres</a>
+			</div>
+		</li>
+		<li class="nav-item">
+		</li>
+	</ul>
+	<hr class="mx-2">
+    <h5>Type de créneaux</h5>
+    <div class="row col-12 m-0  p-0 justify-content-center">
+        <form class="" action="" method="post">
+            <input type="hidden" name="val1" value="week">
+            <button type="submit" class="btn mx-1  btn-outline-secondary">Semaine</button>
+        </form>
+        <form class="" action="" method="post">
+            <input type="hidden" name="val1" value="week-end">
+            <button type="submit" class="btn mx-1  btn-outline-secondary">Week-End</button>
+        </form>
     </div>
-  </div>
+    <hr class="mx-2">
+    <div class="">
+        <h5>Les Consignes :</h5>
+		<div class="ml-3">
+			<p>Créneaux pris : <span id="atTake"></span> / <span > {{ mustTakeWeek }}</span></p>
+
+		</div>
+    </div>
+</nav>
+
   <!-- calendrier -->
-<div class="row col-8 justify-content-around">
-	<div class="row col-12 my-2 justify-content-center">
-		<form class="" action="" method="post">
-			<input type="hidden" name="val1" value="week">
-			<button type="submit" class="btn mx-1  btn-outline-secondary">Semaine</button>
-		</form>
-		<form class="" action="" method="post">
-			<input type="hidden" name="val1" value="week-end">
-			<button type="submit" class="btn mx-1  btn-outline-secondary">Week-End</button>
-		</form>
-	</div>
+<div class="row col-8 ml-5 mt-4 justify-content-around">
+
 {% for item in cren %}
 
-  <div class="card col-12 col-lg-4 col-xl-3 bg-light mx-1 mb-3" data-id ="{{item.id}}" style="max-width: 18rem;">
+  <div class="card p-0 col-12 col-lg-4 col-xl-3 bg-light mx-1 mb-3" data-id ="{{item.id}}" style="max-width: 18rem;">
     <div class="card-header">{{ item.dateOf|date("D d M Y") }}
   		<p>
-        <span class="sp_Equ">Equ</span>
-        <span class="sp_Equ">Equ</span>
-  			<span class="sp_Equ">Equ</span>
-  			<span class="sp_CA">CA</span>
-  			<span class="sp_PL">PL</span>
-  			<span class="sp_CATE">CATE</span>
+	        <span class="sp_Equ">Equ</span>
+	        <span class="sp_Equ">Equ</span>
+			<span class="sp_Equ">Equ</span>
+			<span class="sp_CA">CA</span>
+			<span class="sp_PL">PL</span>
+			<span class="sp_CATE">CATE</span>
   		 </p>
 	   </div>
     <div class="card-body">
 
 		{% for user in item.users %}
 			<div class="sp_{{ user.profile.name }} px-1 my-1">{{ user.username }}</div>
-
 		{% endfor %}
 	 </div>
    <div class="card-footer text-center">
      <div class="btn-group" role="group" aria-label="Basic example">
       <button type="button" class="btn in btn-outline-success">Dispo</button>
-
       <button type="button" class="btn out btn-outline-danger">Indispo</button>
     </div>
    </div>
