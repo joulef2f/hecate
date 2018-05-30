@@ -1,9 +1,16 @@
 {% extends 'base.html.twig' %}
+{% block nav %}
+	<div class="ml-3">
+		<a href="/register"><i class="fas fa-user-plus"></i> Ajouter un SP à l'effectif</a>
+	</div>
 
+{% endblock %}
 {% block body %}
+<div class="row col-8 ml-5 mt-4 justify-content-around">
   <table class="table table-striped">
   <thead>
     <tr>
+      <th scope="col">POJ</th>
       <th scope="col">Nom</th>
       <th scope="col">Email</th>
 	  <th scope="col">Profil</th>
@@ -12,18 +19,26 @@
     </tr>
   </thead>
   <tbody>
-	  {% for user in users %}
-    <tr>
-      <td>{{ user.username }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.profile.name}}</td>
-      <td>{{ user.lastLogin|date() }}</td>
-      <td><a href="">Edit</a> </td>
-    </tr>
-{% endfor %}
+	<form class="" action="" method="post">
+		{% for user in users %}
+			<tr>
+				<td>
+					<input type="checkbox" name="poj[]" value="{{ user.username }}" {{ user.atCount ? "checked='checked'":"" }}>
+				</td>
+				<td>{{ user.username|capitalize }}</td>
+				<td>{{ user.email }}</td>
+				<td>{{ user.profile.name}}</td>
+				<td>{{ user.lastLogin|date() }}</td>
+
+				<td><a href="">Edit</a> </td>
+			</tr>
+		{% endfor %}
 
   </tbody>
 </table>
+<input class="btn btn-outline-secondary my-2" type="submit" name="" value="Valider Effectif">
+</form>
+</div>
 
 
 

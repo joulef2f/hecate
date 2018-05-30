@@ -1,0 +1,15 @@
+body{
+	background-color: lightgrey;
+	max-width: 100%;
+	font-size: 1.4em;
+}
+#trex{
+	display: block;
+	padding-top: 6em;
+	margin: auto;
+}
+#inputLogin{
+	margin-top: 1em;
+	text-align:center;
+
+}

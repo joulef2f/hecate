@@ -1,58 +1,37 @@
 {% extends 'base.html.twig' %}
 
+{% block nav %}
+
+<h5>Type de créneaux</h5>
+<div class="row col-12 m-0  p-0 justify-content-center">
+	<form class="" action="" method="post">
+		<input type="hidden" name="val1" value="week">
+		<button type="submit" class="btn mx-1  btn{{ whichCren == "Semaine"?"":"-outline"}}-secondary">Semaine</button>
+	</form>
+	<form class="" action="" method="post">
+		<input type="hidden" name="val1" value="week-end">
+		<button type="submit" class="btn mx-1  btn{{ whichCren == "Week-End"?"":"-outline"}}-secondary">Week-End</button>
+	</form>
+</div>
+<hr class="mx-2">
+<div class="">
+	<h5>Les Consignes :</h5>
+	<div class="ml-3">
+		<p>Créneaux {{ whichCren }} pris : <span id="atTake"></span> / <span > {{ mustTakeWeek }}</span></p>
+	</div>
+</div>
+
+{% endblock %}
 {% block body %}
-<nav class="col-12 bg-light p-0 m-0 col-md-2  sidebar">
-
-
-	<h2 class="mt-2 mb-0 text-center"><i class="fas fa-user-circle"></i> <span id="username">{{ app.user.username }}</span></h2>
-	<p class='text-center mx-0 p-0'><a class="nav-link " href="/logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></p>
-	<hr class="mx-2">
-    <h5>Menu</h5>
-	<ul class="nav flex-column ">
-		<li class="nav-item">
-			<a class="nav-link" href="{{ path('homepage') }}"><i class="fas fa-adjust"></i> Accueil</a>
-		</li>
-		<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-calendar-alt"></i> Gestion Creneaux</a>
-			<div class="dropdown-menu">
-				<a class="dropdown-item" href="{{ path('createCreneaux')}}"><i class="far fa-calendar-plus"></i> Nouvelle periode</a>
-				<a class="dropdown-item" href="{{ path('users_list') }}"><i class="fas fa-users"></i> Personnel</a>
-				<a class="dropdown-item" href="{{ path('users_list') }}"><i class="fas fa-cogs"></i> Paramètres</a>
-			</div>
-		</li>
-		<li class="nav-item">
-		</li>
-	</ul>
-	<hr class="mx-2">
-    <h5>Type de créneaux</h5>
-    <div class="row col-12 m-0  p-0 justify-content-center">
-        <form class="" action="" method="post">
-            <input type="hidden" name="val1" value="week">
-            <button type="submit" class="btn mx-1  btn-outline-secondary">Semaine</button>
-        </form>
-        <form class="" action="" method="post">
-            <input type="hidden" name="val1" value="week-end">
-            <button type="submit" class="btn mx-1  btn-outline-secondary">Week-End</button>
-        </form>
-    </div>
-    <hr class="mx-2">
-    <div class="">
-        <h5>Les Consignes :</h5>
-		<div class="ml-3">
-			<p>Créneaux pris : <span id="atTake"></span> / <span > {{ mustTakeWeek }}</span></p>
-
-		</div>
-    </div>
-</nav>
 
   <!-- calendrier -->
 <div class="row col-8 ml-5 mt-4 justify-content-around">
 
 {% for item in cren %}
-
+{% dump(item) %}
   <div class="card p-0 col-12 col-lg-4 col-xl-3 bg-light mx-1 mb-3" data-id ="{{item.id}}" style="max-width: 18rem;">
-    <div class="card-header">{{ item.dateOf|date("D d M Y") }}
-  		<p>
+    <div class="card-header {% if item.type == "Semaine" or item.type == "WE-nuit" %}night{% else %} day{% endif %}">{{ item.dateOf|date("D d M Y") }}
+  		<p class="mb-0">
 	        <span class="sp_Equ">Equ</span>
 	        <span class="sp_Equ">Equ</span>
 			<span class="sp_Equ">Equ</span>

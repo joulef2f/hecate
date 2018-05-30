@@ -19,6 +19,7 @@ class CreneauxController extends Controller
      */
     public function indexAction(Request $request,$type ='week')
     {
+
         // i take what that there are in the post and if he's null he takes a default value
         $typeWanted = $request->request->get('val1');
         // on récupere l'année et le mois d'apres selon la date du jour
@@ -42,6 +43,7 @@ class CreneauxController extends Controller
             // ici j'appel la fonciton needofday pour calculer le nombre de creneaux a prendre
             $mustTakeWeek = $this->needsOfDay($oneMonthLater, $year, $type->getId());
 
+            $whichCren = "Semaine";
         }else{
 
             $typeJ = $em->getRepository(TypeCreneaux::class)->findOneBy(['name' => "WE-jour"]);
@@ -53,12 +55,14 @@ class CreneauxController extends Controller
             $mustTakeWeekEndJ = $this->needsOfDay($oneMonthLater, $year, $typeJ->getId());
             $mustTakeWeekEndN = $this->needsOfDay($oneMonthLater, $year, $typeN->getId());
             $mustTakeWeek = $mustTakeWeekEndJ + $mustTakeWeekEndN;
+            $whichCren = "Week-End";
 
         }
 
         return $this->render('default/index.html.twig', [
             'cren' => $cren,
-            'mustTakeWeek' => $mustTakeWeek
+            'mustTakeWeek' => $mustTakeWeek,
+            'whichCren' => $whichCren
         ]);
 
     }
@@ -76,7 +80,7 @@ class CreneauxController extends Controller
         $year = date('m')===12?date('Y')+1:date('Y');
         $oneMonthLater = mktime(0,0,0,date('m') + 1,1,$year);
 
-        
+
             try {
 
                 if ($em->getRepository(Creneaux::class)->howCrenWeek(date('m')+1, $year, $type->getId()) != 0)
@@ -197,7 +201,16 @@ class CreneauxController extends Controller
         $sp = $em->getRepository(Creneaux::class)->howManySp();
 
         // on fais donc le calcul qui nous permmettras de trouver le nombre de creneaux semaine à prendre par personne
-        $crenByPers = (intval($crenDay) * intval($poj->getValParam())) / intval($sp);
+        try {
+            if ($sp == 0) {
+                throw new \Exception("on ne divise pas par 0", 1);
+
+            }
+            $crenByPers = (intval($crenDay) * intval($poj->getValParam())) / intval($sp);
+        } catch (\Exception $e) {
+            $crenByPers = 8;
+        }
+
 
         // je retourne la valeur tout en arrondissant à l'entier superieur
         return ceil($crenByPers);

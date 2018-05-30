@@ -9,7 +9,7 @@ var app = {
   addUser:function(evt){
     var id = $(evt.target).closest('.card').data('id')
     var route = Routing.generate('addUser',{ id : id })
-    console.log(route);
+
 
     $.ajax(
       route,
@@ -27,7 +27,7 @@ var app = {
   removeUser:function(evt){
     var id = $(evt.target).closest('.card').data('id')
     var route = Routing.generate('removeUser',{ id : id })
-    console.log(route);
+
 
     $.ajax(
       route,
@@ -36,7 +36,7 @@ var app = {
 
       }
     ).done(function(data){
-      console.log($('.card[data-id='+id+']>.card-body> div:contains('+data.name+')'));
+
       $('.card[data-id='+id+']>.card-body> div:contains('+data.name+')').remove();
       app.howManyITook();
       app.checkNeeds()
@@ -44,7 +44,7 @@ var app = {
   },
   checkNeeds:function(){
     $(".card > .card-header").each(function(){
-      console.log($(this).next(".card-body").children(".sp_CATEPL").length);
+
 
       if ($(this).next(".card-body").children().hasClass("sp_CATE") || $(this).next(".card-body").children().hasClass("sp_CATEPL") ) {
         $(this).children().children(".sp_CATE").remove();
@@ -67,8 +67,10 @@ var app = {
     })
   },
   howManyITook:function(){
-    var name = $("#username").text()
+    var name = $("#username").text().toLowerCase()
+    console.log(name);
     var nb = $('.card-body > div:contains('+ name +') ').length
+    console.log(nb);
     $('#atTake').text(nb)
   }
 }

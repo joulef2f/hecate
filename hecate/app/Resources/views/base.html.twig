@@ -4,23 +4,49 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Hecate{% endblock %}</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400' rel='stylesheet' type='text/css'>
+
         <link href='https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic,700' rel='stylesheet' type='text/css'>
-	
+
 		<link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
       <!-- Barre du haut -->
-      <nav class="navbar navbar-dark bg-dark justify-content-center">
+      <nav  class="navbar navbar-dark bg-dark justify-content-center" >
 		<img class="justify-self-start" src="{{ asset('image/logo.svg')}}" width="50" height="50" alt="">
         <h1 id="titre" class="m-0">HECATE</h1>
     </nav>
 
       <div class="container-fluid">
           <div class="row">
+			  <nav id="sidebar" class="col-12 bg-light p-0 m-0 col-md-2  sidebar">
 
+
+			  	<h2 class="mt-2 mb-0 text-center"><i class="fas fa-user-circle"></i> <span id="username">{{ app.user.username|capitalize }}</span></h2>
+			  	<p class='text-center mx-0 p-0'><a class="nav-link " href="/logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></p>
+			  	<hr class="mx-2">
+				{% if is_granted('ROLE_ADMIN') %}
+			      <h5>Menu</h5>
+			  	<ul class="nav flex-column ">
+			  		<li class="nav-item">
+			  			<a class="nav-link" href="{{ path('homepage') }}"><i class="fas fa-adjust"></i> Accueil</a>
+			  		</li>
+			  		<li class="nav-item dropdown">
+			  			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-calendar-alt"></i> Gestion</a>
+			  			<div class="dropdown-menu">
+			  				<a class="dropdown-item" href="{{ path('createCreneaux')}}"><i class="far fa-calendar-plus"></i> Nouvelle periode</a>
+			  				<a class="dropdown-item" href="{{ path('users_list') }}"><i class="fas fa-users"></i> Personnel</a>
+			  				<a class="dropdown-item" href="{{ path('parametre') }}"><i class="fas fa-cogs"></i> Paramètres</a>
+			  			</div>
+			  		</li>
+			  		<li class="nav-item">
+			  		</li>
+			  	</ul>
+			  	<hr class="mx-2">
+				{% endif %}
+			    {% block nav %}{% endblock %}
+			  </nav>
 
             {% block body %}{% endblock %}
 

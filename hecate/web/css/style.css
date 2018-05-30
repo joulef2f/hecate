@@ -36,3 +36,18 @@ h1{
 	font-family: 'Roboto';
 	letter-spacing: 0.8em;
 }
+#sidebar{
+	min-height: 50em;
+}
+.night{
+	background-image: url(/image/nightday2.png);
+	background-repeat: no-repeat;
+	background-position:0 -91px;
+
+}
+.day{
+	background-image: url(/image/nightday2.png);
+	background-repeat: no-repeat;
+	
+
+}

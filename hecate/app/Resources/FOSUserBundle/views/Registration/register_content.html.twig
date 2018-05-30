@@ -1,0 +1,23 @@
+
+<div class="m-3  row justify-content-around">
+<div class="col-8">
+
+{{ form_start(form)}}
+{{ form_widget(form) }}
+<input type="submit" name="" value="Créer l'utilisateur">
+{{ form_end(form) }}
+
+</div>
+<div class="col-3">
+  <p>L'adresse mail doit être unique, 2 utilisateurs ne peuvent pas avoir la même adresse mail</p>
+  <hr>
+  <p>Le nom d'utilisateur doit être la premièr lettre du prénom et le nom de famille exemple pour Robert Durand : rdurand</p>
+  <hr>
+  <p>Le mot de passe est crypté en base de donnée, en cas de perte nous pourrons réinitialisé mais pas vous renvoyer votre mot passe existant</p>
+  <hr>
+  <p>Choisir le profil : CATE : chef d'agrès tout engin , CATEPL : chef d'agrès tout engin + PL ....</p>
+  <hr>
+  <p>La case at Count est à coché si le nouvel SP est à inclure dans le calcul pour la répartition des créneaux ( exemple: un profil étudiant ne serait pas à cocher)</p>
+</div>
+
+</div>

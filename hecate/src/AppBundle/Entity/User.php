@@ -158,4 +158,54 @@ class User extends BaseUser
         return $this;
     }
 
+
+    /**
+     * Get the value of Cren Take
+     *
+     * @return mixed
+     */
+    public function getCrenTake()
+    {
+        return $this->crenTake;
+    }
+
+    /**
+     * Set the value of Cren Take
+     *
+     * @param mixed crenTake
+     *
+     * @return self
+     */
+    public function setCrenTake($crenTake)
+    {
+        $this->crenTake = $crenTake;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of At Count
+     *
+     * @return mixed
+     */
+    public function getAtCount()
+    {
+        return $this->atCount;
+    }
+
+    /**
+     * Set the value of At Count
+     *
+     * @param mixed atCount
+     *
+     * @return self
+     */
+    public function setAtCount($atCount)
+    {
+        $this->atCount = $atCount;
+
+        return $this;
+    }
+
+
 }
