@@ -19,7 +19,7 @@ var app = {
       }
     ).done(function(data){
 
-      $(evt.target).parent().parent().prev(".card-body").append(`<div class="sp_${data.profil} px-1 my-1">${data.name}</div>`)
+      $(evt.target).parent().parent().prev(".card-body").append(`<li class="sp_${data.profil} px-1 my-1">${data.name}</li>`)
       app.howManyITook();
       app.checkNeeds()
     })
@@ -37,7 +37,7 @@ var app = {
       }
     ).done(function(data){
 
-      $('.card[data-id='+id+']>.card-body> div:contains('+data.name+')').remove();
+      $('.card[data-id='+id+']>.card-body> li:contains('+data.name+')').remove();
       app.howManyITook();
       app.checkNeeds()
     })

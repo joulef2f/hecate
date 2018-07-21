@@ -8,11 +8,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Entity\Creneaux;
+use AppBundle\Entity\User;
 use AppBundle\Entity\Param;
 use AppBundle\Entity\TypeCreneaux;
 
 class CreneauxController extends Controller
 {
+    private $userList;
     /**
      * @Route("/", name="homepage")
      *@Method({"GET","POST"})
@@ -21,6 +23,19 @@ class CreneauxController extends Controller
     {
 
         // i take what that there are in the post and if he's null he takes a default value
+        $typeWanted = $request->request->get('val1');
+        // on récupere l'année et le mois d'apres selon la date du jour
+        $year = date('m')===12?date('Y')+1:date('Y');
+        $oneMonthLater = date('m')+1;
+
+
+
+
+
+        if(isset($typeWanted)){
+
+            $type = $typeWanted;
+        }// i take what that there are in the post and if he's null he takes a default value
         $typeWanted = $request->request->get('val1');
         // on récupere l'année et le mois d'apres selon la date du jour
         $year = date('m')===12?date('Y')+1:date('Y');
@@ -58,7 +73,39 @@ class CreneauxController extends Controller
             $whichCren = "Week-End";
 
         }
+        // cette fonction sert à mettre en mémoire la position de départ pour le drag&srop
+        $this->sort($cren);
+        return $this->render('default/index.html.twig', [
+            'cren' => $cren,
+            'mustTakeWeek' => $mustTakeWeek,
+            'whichCren' => $whichCren
+        ]);
+        $em = $this->getDoctrine()->getManager();
+        // or i take the week's crens or the weeks-ends
+        if ($type == 'week') {
 
+            $type = $em->getRepository(TypeCreneaux::class)->findOneBy(['name' => "Semaine"]);
+            $cren = $em->getRepository(Creneaux::class)->findCreneauxWeek($em, $oneMonthLater, $year, $type->getId());
+            // ici j'appel la fonciton needofday pour calculer le nombre de creneaux a prendre
+            $mustTakeWeek = $this->needsOfDay($oneMonthLater, $year, $type->getId());
+
+            $whichCren = "Semaine";
+        }else{
+
+            $typeJ = $em->getRepository(TypeCreneaux::class)->findOneBy(['name' => "WE-jour"]);
+            $typeN = $em->getRepository(TypeCreneaux::class)->findOneBy(['name' => "WE-nuit"]);
+
+            $cren = $em->getRepository(Creneaux::class)->findCreneauxWeekEnd($em, $oneMonthLater, $year, $typeJ->getId(), $typeN->getId());
+            // ici j'appel la fonciton needofday pour calculer le nombre de creneaux a prendre je l'appel pour gerer les creneaux week end jour et nuit
+
+            $mustTakeWeekEndJ = $this->needsOfDay($oneMonthLater, $year, $typeJ->getId());
+            $mustTakeWeekEndN = $this->needsOfDay($oneMonthLater, $year, $typeN->getId());
+            $mustTakeWeek = $mustTakeWeekEndJ + $mustTakeWeekEndN;
+            $whichCren = "Week-End";
+
+        }
+        // cette fonction sert à mettre en mémoire la position de départ pour le drag&srop
+        $this->sort($cren);
         return $this->render('default/index.html.twig', [
             'cren' => $cren,
             'mustTakeWeek' => $mustTakeWeek,
@@ -216,5 +263,62 @@ class CreneauxController extends Controller
         return ceil($crenByPers);
 
 
+    }
+      private function sort($cren)
+      {
+          foreach ($cren as $day) {
+              foreach ($day->getUsers() as $user) {
+                  $this->userList[$day->getId()][] = $user->getUsername();
+              }
+          }
+        // foreach ($cren as $day) {
+        //     foreach ($day->getUsers() as $user) {
+        //         $this->userList[$user->getUsername()][] = $day->getId();
+        //     }
+        // }
+
+        dump($this->userList);
+
       }
+
+  /**
+  *fonction qui sert à sauvegarder la position des cases lors du drag and drop
+   *@Route("/update/all", name="updateAll", options = { "expose"=true})
+   */
+    public function updateAll(Request $request)
+    {
+        // jquery retire les tableaux vide, de ce fait je suis obligé de stingifier la chaine pour eviter qu'il fasse le tri et don dde le decoder
+        $data = json_decode($request->request->get('tab'));
+        $em = $this->getDoctrine()->getManager();
+
+        foreach ($data as $key => $value) {
+             $tabA = $em->getRepository(Creneaux::class)->findOneBy(['id' => $key]);
+
+
+            foreach ($value as $user) {
+                $toAdd = $em->getRepository(User::class)->findOneBy(['username'=> $user]);
+                if (!$tabA->getUsers()->contains($toAdd)) {
+                    $tabA->addUser($toAdd);
+                    $em->flush();
+
+                }
+            }
+
+            foreach ($tabA->getUsers() as $user) {
+                if (!in_array($user, $value)) {
+                    $user->removeCreneaux($tabA);
+                    $em->flush();
+                
+
+                }
+            }
+
+
+
+        }
+
+
+        return $this->json(['data'=>'ok']);
+
+    }
 }

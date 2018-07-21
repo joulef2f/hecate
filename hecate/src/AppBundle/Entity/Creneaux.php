@@ -15,7 +15,7 @@ class Creneaux
     public function __construct()
     {
 
-        $this->users = new ArrayCollection;
+        $this->users = new ArrayCollection();
     }
     public function addUser(User $user)
     {

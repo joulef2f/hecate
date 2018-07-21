@@ -1,3 +1,7 @@
+ul{
+	list-style-type:  none;
+}
+
 .sp_CA{
 background-color: red;
 color: white;
@@ -42,12 +46,25 @@ h1{
 .night{
 	background-image: url(/image/nightday2.png);
 	background-repeat: no-repeat;
-	background-position:0 -91px;
+	background-position:0 -6em;
+  background-size: cover;
+
+
 
 }
 .day{
 	background-image: url(/image/nightday2.png);
 	background-repeat: no-repeat;
-	
+
+}
+
+.card-body .ui-selected {background: #F39814}
+/* @media screen and (min-width: 1024px) and (max-width:1440px){
+	.night, .day{
+		background-position:3em  -6em ;
+    ;le
+
+	} */
+
 
 }
