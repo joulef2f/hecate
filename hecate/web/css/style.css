@@ -59,12 +59,11 @@ h1{
 }
 
 .card-body .ui-selected {background: #F39814}
-/* @media screen and (min-width: 1024px) and (max-width:1440px){
-	.night, .day{
-		background-position:3em  -6em ;
-    ;le
-
-	} */
-
 
 }
+@media screen and (min-width: 1024px) and (max-width:1440px){
+	.night, .day{
+		background-position:0em  -4em ;
+		;
+
+	}

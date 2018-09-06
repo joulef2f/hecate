@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Entity\Param;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Creneaux;
 /**
  *@Route("/admin")
  */
@@ -21,13 +23,11 @@ class ParamController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $poj = $em->getRepository(Param::class)->findOneBy(['name'=>'poj']);
-        $crenDay = $em->getRepository(Param::class)->findOneBy(['name'=>'crenDayToTake']);
-        $crenWE = $em->getRepository(Param::class)->findOneBy(['name'=>'crenWEToTake']);
+        $users = $em->getRepository(User::class)->findAll();
 
         return $this->render('admin/index.html.twig', [
             'poj' => $poj,
-            'crenDay' => $crenDay,
-            'crenWE' => $crenWE
+            'users' => $users
         ]);
     }
     /**
@@ -70,4 +70,34 @@ class ParamController extends Controller
         return $this->json(['val' => $val]);
 
     }
+    /**
+     * @Route("/creneaux/view", name="viewCreneaux", options = {"expose" = true})
+     */
+     public function viewCreneaux(Request $request)
+     {
+       // on changera cette ligne par la recherche de l'id du créneaux reçu en AJAX
+       $dateReçu = "08-15-2018";
+       // je scinde la date pour pouvoir la transformer dans le format nécessaire pour les recherche
+       $tabDate = explode("-",$dateReçu);
+       // je la transforme en une date
+       $date = mktime(0,0,0, $tabDate[0],$tabDate[1],$tabDate[2]);
+       // je crée un objet Datetime
+       $dateOf = new \Datetime;
+       // je transforme en timesstamp
+       $dateOf->setTimestamp($date);
+
+
+
+       $em = $this->getDoctrine()->getManager();
+
+       $cren = $em->getRepository(Creneaux::class)->findOneBy(["dateOf" => $dateOf]);
+
+       $ToSend = [];
+
+       foreach ($cren->getUsers() as $user) {
+         $ToSend[$user->getUsername()][] = $user->getProfile()->getName();
+       }
+       dump($ToSend);
+
+     }
 }
