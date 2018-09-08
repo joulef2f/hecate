@@ -12,7 +12,7 @@ use AppBundle\Entity\Creneaux;
 /**
  *@Route("/admin")
  */
-class ParamController extends Controller
+class ParamController extends CoreController
 {
 
     /**
@@ -97,7 +97,7 @@ class ParamController extends Controller
        foreach ($cren->getUsers() as $user) {
          $ToSend[$user->getUsername()][] = $user->getProfile()->getName();
        }
-       dump($ToSend);
+      
 
      }
 }
