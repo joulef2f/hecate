@@ -69,7 +69,7 @@ var app = {
   howManyITook:function(){
     var name = $("#username").text().toLowerCase()
     console.log(name);
-    var nb = $('.card-body > div:contains('+ name +') ').length
+    var nb = $('.card-body > li:contains('+ name +') ').length
     console.log(nb);
     $('#atTake').text(nb)
   }

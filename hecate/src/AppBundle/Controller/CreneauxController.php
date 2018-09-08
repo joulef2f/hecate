@@ -12,7 +12,7 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\Param;
 use AppBundle\Entity\TypeCreneaux;
 
-class CreneauxController extends Controller
+class CreneauxController extends CoreController
 {
     private $userList;
     /**
@@ -75,7 +75,7 @@ class CreneauxController extends Controller
         }
         // cette fonction sert à mettre en mémoire la position de départ pour le drag&srop
         $this->sort($cren);
-        return $this->render('default/index.html.twig', [
+        return $this->rendutemplate('default/index.html.twig', [
             'cren' => $cren,
             'mustTakeWeek' => $mustTakeWeek,
             'whichCren' => $whichCren
@@ -106,11 +106,16 @@ class CreneauxController extends Controller
         }
         // cette fonction sert à mettre en mémoire la position de départ pour le drag&srop
         $this->sort($cren);
-        return $this->render('default/index.html.twig', [
+        return $this->rendutemplate('default/index.html.twig', [
             'cren' => $cren,
             'mustTakeWeek' => $mustTakeWeek,
             'whichCren' => $whichCren
         ]);
+        // return $this->render('default/index.html.twig', [
+        //     'cren' => $cren,
+        //     'mustTakeWeek' => $mustTakeWeek,
+        //     'whichCren' => $whichCren
+        // ]);
 
     }
     /**
@@ -277,7 +282,7 @@ class CreneauxController extends Controller
         //     }
         // }
 
-        dump($this->userList);
+      
 
       }
 

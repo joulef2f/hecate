@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
-{% block stylesheets %}  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">{% endblock %}
 
 {% block nav %}
 
@@ -18,51 +19,52 @@
 <div class="">
 	<h5>Les Consignes :</h5>
 	<div class="ml-3">
-		<p>Créneaux {{ whichCren }} pris : <span id="atTake"></span> / <span > {{ mustTakeWeek }}</span></p>
+		<p>Créneaux {{ whichCren }} pris : <span id="atTake"></span> / <span> {{ mustTakeWeek }}</span></p>
 	</div>
 </div>
 
 {% endblock %}
 {% block body %}
 
-  <!-- calendrier -->
+<!-- calendrier -->
 <div class="row col-8 ml-5 mt-4 justify-content-around">
 
-{% for item in cren %}
+	{% for item in cren %}
 
-  <div class="card p-0 col-12 col-lg-4 col-xl-3 bg-light mx-1 mb-3" data-id ="{{item.id}}" style="max-width: 18rem;">
-    <div class="card-header {% if item.type == "Semaine" or item.type == "WE-nuit" %}night{% else %} day{% endif %}">{{ item.dateOf|date("D d M Y") }}
-  		<p class="mb-0">
-	        <span class="sp_Equ">Equ</span>
-	        <span class="sp_Equ">Equ</span>
-			<span class="sp_Equ">Equ</span>
-			<span class="sp_CA">CA</span>
-			<span class="sp_PL">PL</span>
-			<span class="sp_CATE">CATE</span>
-  		 </p>
-	   </div>
-    <ul id="sortable{{ loop.index }}" class="card-body ">
+	<div class="card p-0 col-12 col-lg-4 col-xl-3 bg-light mx-1 mb-3" data-id="{{item.id}}" style="max-width: 18rem;">
+		<div class="card-header {% if item.type == " Semaine" or item.type=="WE-nuit" %}night{% else %} day{% endif %}">{{
+			strftime(item.dateOf) }}
+			<p class="mb-0">
+				<span class="sp_Equ">Equ</span>
+				<span class="sp_Equ">Equ</span>
+				<span class="sp_Equ">Equ</span>
+				<span class="sp_CA">CA</span>
+				<span class="sp_PL">PL</span>
+				<span class="sp_CATE">CATE</span>
+			</p>
+		</div>
+		<ul id="sortable{{ loop.index }}" class="card-body ">
 
-		{% for user in item.users %}
+			{% for user in item.users %}
 			<li class="sp_{{ user.profile.name }} px-1 my-1 ">{{ user.username }}</li>
-		{% endfor %}
-	</ul>
-   <div class="card-footer text-center">
-     <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn in btn-outline-success">Dispo</button>
-      <button type="button" class="btn out btn-outline-danger">Indispo</button>
-    </div>
-   </div>
- </div>
-  {% endfor %}
+			{% endfor %}
+		</ul>
+		<div class="card-footer text-center">
+			<div class="btn-group" role="group" aria-label="Basic example">
+				<button type="button" class="btn in btn-outline-success">Dispo</button>
+				<button type="button" class="btn out btn-outline-danger">Indispo</button>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
 </div>
 
 {% endblock %}
 {% block javascripts %}
 
-	<script src="{{ asset('js/creneaux.js') }}" type="text/javascript"></script>
-	{% if is_granted('ROLE_ADMIN') %}
-		<script src="{{ asset('js/sortable.js') }}" type="text/javascript"></script>
-	{% endif %}
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{ asset('js/creneaux.js') }}" type="text/javascript"></script>
+{% if is_granted('ROLE_ADMIN') %}
+<script src="{{ asset('js/sortable.js') }}" type="text/javascript"></script>
+{% endif %}
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 {% endblock %}

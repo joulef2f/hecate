@@ -20,7 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 /**
  * @Route("users")
  */
-class UserController extends Controller
+class UserController extends CoreController
 {
     /**
      * @Route("/list", name="users_list")
