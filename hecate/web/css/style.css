@@ -44,18 +44,19 @@ h1{
 	min-height: 50em;
 }
 .night{
-	background-image: url(/image/nightday2.png);
+	background-image: url(/image/night2.png);
 	background-repeat: no-repeat;
-	background-position:0 -6em;
+	background-position: end;
   background-size: cover;
 
 
 
 }
 .day{
-	background-image: url(/image/nightday2.png);
+	background-image: url(/image/day2.png);
 	background-repeat: no-repeat;
-
+	/* background-position: end; */
+	background-size: cover
 }
 
 .card-body .ui-selected {background: #F39814}

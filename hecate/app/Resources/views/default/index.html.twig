@@ -32,7 +32,7 @@
 	{% for item in cren %}
 
 	<div class="card p-0 col-12 col-lg-4 col-xl-3 bg-light mx-1 mb-3" data-id="{{item.id}}" style="max-width: 18rem;">
-		<div class="card-header {% if item.type == " Semaine" or item.type=="WE-nuit" %}night{% else %} day{% endif %}">{{
+		<div class="card-header {% if item.type == "Semaine" or item.type =="WE-nuit" %}night{% else %} day{% endif %}">{{
 			strftime(item.dateOf) }}
 			<p class="mb-0">
 				<span class="sp_Equ">Equ</span>
