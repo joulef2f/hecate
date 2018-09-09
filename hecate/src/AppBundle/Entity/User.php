@@ -39,7 +39,7 @@ class User extends BaseUser
      */
      private $crenTake;
      /**
-      * @ORM\Column(name="atCount", type="boolean")
+      * @ORM\Column(name="atCount", type="boolean", nullable = true)
       */
       private $atCount;
 
