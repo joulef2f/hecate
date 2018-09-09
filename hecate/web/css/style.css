@@ -47,7 +47,7 @@ h1{
 	background-image: url(../image/night2.png);
 	background-repeat: no-repeat;
 	background-position: right top;
-  background-size: auto;
+  	background-size: auto;
 
 
 
@@ -56,15 +56,11 @@ h1{
 	background-image: url(../image/day2.png);
 	background-repeat: no-repeat;
 	background-position: right center;
-	background-size: auto%;
+	background-size: auto;
 }
 
 .card-body .ui-selected {background: #F39814}
 
-}
-@media screen and (min-width: 1024px) and (max-width:1440px){
-	.night, .day{
-		background-position:0em  -4em ;
-		;
 
-	}
+
+}
