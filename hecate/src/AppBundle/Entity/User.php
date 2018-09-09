@@ -35,7 +35,7 @@ class User extends BaseUser
      */
     private $creneaux;
     /**
-     * @ORM\Column(name="crenTake", type="integer")
+     * @ORM\Column(name="crenTake", type="integer", nullable=true)
      */
      private $crenTake;
      /**
