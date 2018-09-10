@@ -3,28 +3,42 @@ ul{
 }
 
 .sp_CA{
-background-color: red;
+background: rgb(79, 0, 0);
+background: linear-gradient(90deg, rgba(79, 0, 0, 1) 0%, rgba(176, 0, 9, 1) 99%);
 color: white;
+font-weight: bold;
 }
 .sp_CATE{
-background-color: yellow;
+background: rgb(106, 101, 2);
+background: linear-gradient(90deg, rgba(106, 101, 2, 1) 0%, rgba(226, 200, 0, 1) 99%);
+font-weight: bold;
+color: white;
+font-weight: bold;
 
 }
 .sp_Equ{
-background-color: green;
+background: rgb(3, 80, 42);
+background: linear-gradient(90deg, rgba(3, 80, 42, 1) 0%, rgba(8, 173, 21, 1) 99%);
 color: white;
+font-weight: bold;
 }
 .sp_CAPL{
-background-color: purple;
+background: rgb(92, 0, 115);
+background: linear-gradient(90deg, rgba(92, 0, 115, 1) 50%, rgba(167, 0, 249, 1) 100%);
 color: white;
+font-weight: bold;
 }
 .sp_PL{
-background-color: pink;
-color: white;
+	background: rgb(115, 0, 72);
+	background: linear-gradient(90deg, rgba(115, 0, 72, 1) 50%, rgba(249, 0, 231, 1) 100%);
+	color: white;
+	font-weight: bold;
 }
 .sp_CATEPL{
-background-color: orange;
-color: black;
+	background: rgb(168, 83, 3);
+	background: linear-gradient(90deg, rgba(168, 83, 3, 1) 50%, rgba(249, 133, 0, 1) 100%);
+	color: white;
+	font-weight: bold;
 }
 
 a{
