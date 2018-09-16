@@ -215,7 +215,7 @@ class CreneauxController extends CoreController
         $em->flush();
 
         return $this->json([
-            'name' => $user->getUsername(),
+            'name' => ucfirst($user->getUsername()),
             'profil' => $user->getProfile()->getName(),
         ]);
 
@@ -233,7 +233,7 @@ class CreneauxController extends CoreController
 
         $em->flush();
         return $this->json([
-            'name' => $user->getUsername(),
+            'name' => ucfirst($user->getUsername()),
             'profil' => $user->getProfile()->getName(),
         ]);
       }

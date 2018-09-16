@@ -67,7 +67,7 @@ var app = {
     })
   },
   howManyITook:function(){
-    var name = $("#username").text().toLowerCase()
+    var name = $("#username").text()
     console.log(name);
     var nb = $('.card-body > li:contains('+ name +') ').length
     console.log(nb);
